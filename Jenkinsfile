@@ -1,6 +1,11 @@
 pipeline {
     agent any
     stages {
+        stage('Debug') {
+            steps {
+                sh 'env'
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Building application...'
