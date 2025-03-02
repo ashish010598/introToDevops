@@ -4,11 +4,6 @@ pipeline {
         githubPush()
     }
     stages {
-        stage('Debug') {
-            steps {
-                sh 'env'
-            }
-        }
         stage('Build') {
             steps {
                 echo 'Building application...'
@@ -20,6 +15,11 @@ pipeline {
             }
         }
         stage('Deploy to Staging') {
+            when {
+                expression {
+                    env.GIT_BRANCH != 'origin/master'
+                }
+            }
             steps {
                 echo 'Deploying to Staging...'
                 sh 'echo "Staging Deployment Done"'
@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Deploy to Production') {
             when {
-                branch 'master'
+                expression { env.GIT_BRANCH == 'origin/master' }
             }
             steps {
                 echo 'Deploying to Production...'
