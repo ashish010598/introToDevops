@@ -1,6 +1,14 @@
 pipeline {
     agent any
+    triggers {
+        githubPush()
+    }
     stages {
+        stage('Debug') {
+            steps {
+                sh 'env'
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Building application...'
