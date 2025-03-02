@@ -3,20 +3,27 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building the application...'
-                sh 'echo "Build successful"'
+                echo 'Building application...'
             }
         }
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh 'echo "Tests passed"'
             }
         }
-        stage('Deploy') {
+        stage('Deploy to Staging') {
             steps {
-                echo 'Deploying the application...'
-                sh 'echo "Deployed successfully"'
+                echo 'Deploying to Staging...'
+                sh 'echo "Staging Deployment Done"'
+            }
+        }
+        stage('Deploy to Production') {
+            when {
+                branch 'master'
+            }
+            steps {
+                echo 'Deploying to Production...'
+                sh 'echo "Production Deployment Done"'
             }
         }
     }
